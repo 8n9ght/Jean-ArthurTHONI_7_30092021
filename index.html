@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupomania</title>
+    <link rel="stylesheet" href="/public/style.css">
+</head>
+<body>
+    <h1 class="title">Groupomania</h1>
+    <form action="/backend/app.js" method="post">
+        <label for="user_nom">Indiquez votre nom :</label>
+        <input type="text" name="nom" id="user_nom">
+        <label for="user_prenom">Indiquez votre prénom :</label>
+        <input type="text" name="prenom" id="user_prenom">
+        <label for="user_email">Indiquez votre email :</label>
+        <input type="email" name="email" id="user_email">
+        <label for="user_pass">Indiquez votre mot de passe :</label>
+        <input type="password" name="mot_pass" id="user_pass">
+        <input type="submit" value="S'inscrire">
+    </form>
+</body>
+</html>
