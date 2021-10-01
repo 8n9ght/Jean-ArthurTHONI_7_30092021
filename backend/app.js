@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mysql = require('mysql2');
 const helmet = require('helmet');
+const PORT = process.env.PORT || 8080;
 require('dotenv').config();
 
 const adminRoute = require('./routes/admin');
@@ -40,6 +41,10 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/admin', adminRoute);
 app.use('/auth', userRoute);
 /* app.use('/api/posts', postRoute); */
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}.`)
+});
 
 module.exports = app;
 module.exports = db;
