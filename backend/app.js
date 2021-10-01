@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const mysql = require('mysql2');
 const helmet = require('helmet');
 const PORT = process.env.PORT || 8080;
 require('dotenv').config();
@@ -8,20 +7,6 @@ require('dotenv').config();
 const adminRoute = require('./routes/admin');
 const userRoute = require('./routes/user');
 /* const postRoute = require('./routes/post'); */
-
-const db = mysql.createConnection({
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASS,
-    database: process.env.DATABASE
-});
-
-db.connect(err =>{
-    if(err){
-        throw err
-    }
-    console.log('DB connected')
-});
 
 const app = express();
 
@@ -47,4 +32,3 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
-module.exports = db;

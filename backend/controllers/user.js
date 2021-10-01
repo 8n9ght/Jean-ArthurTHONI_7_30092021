@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const db = require('../database');
 
 //création d'un compte
 exports.signup = (req, res) => {
@@ -11,21 +12,21 @@ exports.signup = (req, res) => {
             email: req.body.email,
             mot_pass: hash
         };
-        user.save()
-        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-        .catch(error => res.status(400).json({ error }));
-    })
-    let sql = 'INSERT INTO user SET ?'
-    let query = db.query(sql, userInput, err =>{
+        let sql = 'INSERT INTO user SET ?'
+        let query = db.query(sql, user, err =>{
         if(err){
             throw err
         }
         res.send('Inscription réussi')
     })
+        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+        .catch(error => res.status(400).json({ error }));
+    })
+    
 };
 
 
-//affichage d'un compte
+/* //affichage d'un compte
 exports.showProfil = (req, res) => {
     let sql = `SELECT * FROM user WHERE id = ${req.params.id}`
     let query = db.query(sql, (err, result) =>{
@@ -64,4 +65,4 @@ exports.deleteProfil = (req, res) => {
         res.send('Compte supprimé')
     })
 };
-
+ */
