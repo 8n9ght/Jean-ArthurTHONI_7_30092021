@@ -71,8 +71,11 @@ exports.updateProfil = (req, res) => {
         let sql = `UPDATE user SET nom = '${newNom}', prenom = '${newPrenom}', email = '${newEmail}', mot_pass = '${newPass}' WHERE id = ${req.params.id}`;
         let query = db.query(sql, (err, result) => {
             console.log(result)
-            if(err){
-               return res.status(500).json({message:'Modification non réalisée'})
+            if(result === undefined){
+               return res.status(400).json({message:'L\'email renseignée est déjà utilisée'})
+            }
+            else if(result.affectedRows === 0){
+                return res.status(500).json({message:'L\'opération demandée est impossible'})
             }
             res.status(200).json({message:'Profile mis à jour'})
         })
