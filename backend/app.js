@@ -24,7 +24,7 @@ app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/admin', adminRoute);
-app.use('/auth', userRoute);
+app.use('/user', userRoute);
 /* app.use('/api/posts', postRoute); */
 
 app.listen(PORT, () => {
