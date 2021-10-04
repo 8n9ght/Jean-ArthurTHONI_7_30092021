@@ -29,7 +29,7 @@ exports.login = (req, res) => {
         email: req.body.email,
         password: req.body.password
     }
-    const sql = 'SELECT mot_pass FROM user WHERE email = ?'
+    const sql = 'SELECT * FROM user WHERE email = ?'
     db.query(sql, user.email, (err, result) => {
         if(result.length === 0){
             return res.status(400).json({message:'Utilisateur non trouvé'})
@@ -39,20 +39,33 @@ exports.login = (req, res) => {
             if (!valid) {
                 return res.status(401).json({ error: 'Mot de passe incorrect !' });
             }
-            res.status(200).json({message:'Connexion réussie', token: jwt.sign(
-                {userId: user._id},
+            res.status(200).json({message:'Connexion réussie', data: result[0], token: jwt.sign(
+                {id: result[0].id},
                 'RANDOM_TOKEN_SECRET',
                 {expiresIn: '24h'}
             )})
         })
         .catch(err => res.status(500).json({message:'Connexion échouée'}, err))            
     })
-}
+};
 
-//affichage d'un compte
+//affichage de l'équipe
+exports.showTeam = (req, res) => {
+    let sql = 'SELECT nom, prenom FROM user'
+    let query = db.query(sql, (err, result) =>{
+        if(err){
+            throw err
+        }
+        res.status(200).json(result)
+    })
+};
+
+
+//affichage d'un membre
 exports.showProfil = (req, res) => {
-    const sql = `SELECT nom, prenom FROM user WHERE id = ${req.params.id}`
+    const sql = `SELECT id, nom, prenom, email FROM user WHERE id = ${req.params.id}`
     db.query(sql, (err, result) =>{
+        console.log(result)
         if(result.length === 0){
             return res.status(404).json({message:'Utilisateur non trouvé'})
         }

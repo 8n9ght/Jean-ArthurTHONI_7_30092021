@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const adminRoute = require('./routes/admin');
 const userRoute = require('./routes/user');
-/* const postRoute = require('./routes/post'); */
+const postRoute = require('./routes/post');
 
 const app = express();
 
@@ -20,12 +20,11 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
-/* app.use(express.static(publicDirectory)); */
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/admin', adminRoute);
 app.use('/user', userRoute);
-/* app.use('/api/posts', postRoute); */
+app.use('/posts', postRoute);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`)
