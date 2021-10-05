@@ -13,10 +13,10 @@
             <button v-if="role !== 'user'" class="delete_post_btn" @click="deletePost()" >Supprimer mon compte</button>
         </div>
 
-        <form class="poster" >
+        <div class="poster" >
             <textarea v-model="contenu" class="poster__input" name="contenu" id="" cols="30" rows="10" placeholder="Entrez votre message ici"></textarea>
             <button class="poster__button" @click="postMessage()">Publier</button>
-        </form>        
+        </div>        
         
     </div>
 </template>
@@ -26,6 +26,10 @@
 <script>
 
 import {mapState} from 'vuex'
+const axios = require('axios');
+const instance = axios.create({
+    baseURL: 'http://localhost:8080/posts'
+});
 
 export default {
     name: 'Feed',
@@ -58,7 +62,7 @@ export default {
             })
         },
         deletePost: function(){
-            console.log(this.$store.state.user.data.role)
+            instance.delete('/delete_post')
         }
     }
 }
