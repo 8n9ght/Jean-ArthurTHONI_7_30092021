@@ -10,7 +10,7 @@
                 <p>{{post.contenu}}</p>
             </div>
 
-            <button v-if="role !== 'user'" class="delete_post_btn" @click="deletePost()" >Supprimer mon compte</button>
+            <button v-if="role !== 'user'" class="delete_post_btn" @click="deletePost()" >Supprimer les publications</button>
         </div>
 
         <div class="poster" >
