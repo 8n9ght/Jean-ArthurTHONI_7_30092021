@@ -133,12 +133,9 @@ export default{
 </script>
 
 <style scoped>
-*:focus{
-    outline: none;
-}
 
 .container{
-    background: linear-gradient(45deg, rgba(6,0,107,1) 0%, rgba(9,120,121,1) 35%, rgba(0,212,255,1) 100%);
+    background: #091F44;
     height: 52.7rem;
     display: flex;
     align-items: center;
@@ -156,7 +153,7 @@ export default{
 
 .sub_title{
     margin: .5rem 0 0;
-    color: rgb(6,0,107);
+    color: #091F44;
 }
 
 .switch__content{
@@ -165,7 +162,7 @@ export default{
 }
 
 .switch__content__link{
-    color: rgb(0,212,255);
+    color: #D1515A;
     text-decoration: underline;
 }
 
@@ -230,9 +227,9 @@ form{
 }
 
 .button--ok{
-    color: rgb(6,0,107);
+    color: #fff;
     border: none;
-    background: rgb(0,212,255);
+    background: #D1515A;
     padding: .5rem 1.5rem;
     border-radius: .5rem;
     width: 10rem;
@@ -245,7 +242,7 @@ form{
 .submit__button--nok{
     color: white;
     border: none;
-    background: rgb(200, 200, 200);
+    background: #AEAEB0;
     padding: .5rem 1.5rem;
     border-radius: .5rem;
     width: 10rem;

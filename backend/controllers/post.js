@@ -18,7 +18,7 @@ exports.createPost = (req, res) => {
 }
 
 exports.displayFeed = (req, res) => {
-    let sql = 'SELECT contenu FROM post ORDER BY postID DESC'
+    let sql = 'SELECT postId, contenu FROM post ORDER BY postID DESC'
     let query = db.query(sql, (err, result) =>{
         if(err){
             throw err
@@ -28,12 +28,12 @@ exports.displayFeed = (req, res) => {
 }
 
 exports.deletePost = (req, res) => {
-    let sql = 'DELETE FROM post'
+    let sql = 'DELETE FROM post WHERE postId = ?'
     let query = db.query(sql, (err, result) =>{
         if(err){
             throw err
         }
-        res.status(200).json({message: 'Tous les posts ont été supprimés'})
+        res.status(200).json({message: 'Post supprimé'})
     })
 }
 

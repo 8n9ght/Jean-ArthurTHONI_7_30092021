@@ -42,6 +42,7 @@ const store = createStore({
         },
         feedPosts: {
             contenu: '',
+            postId: '',
         }
     },
     mutations: {
@@ -148,6 +149,7 @@ const store = createStore({
         getPosts: function(){
             axios.get('http://localhost:8080/posts/feed')
                 .then(function(response){
+                    console.log(response.data[0].postId)
                     store.commit('feedPosts', response.data)
                 })
         },

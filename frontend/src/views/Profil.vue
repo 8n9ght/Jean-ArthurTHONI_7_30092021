@@ -98,7 +98,7 @@ export default {
 }
 
 .container{
-    background: linear-gradient(45deg, rgba(6,0,107,1) 0%, rgba(9,120,121,1) 35%, rgba(0,212,255,1) 100%);
+    background: #091F44;
     height: 52.7rem;
     display: flex;
     align-items: center;
@@ -116,7 +116,7 @@ export default {
 
 .sub_title{
     margin: .5rem 0 0;
-    color: rgb(6,0,107);
+    color: #091F44;
 }
 
 .user__infos{
@@ -172,32 +172,28 @@ form{
     background: rgb(240, 240, 240);
     border-radius: .5rem;
     padding: 0 0 0 .8rem;
+    color: #091F44;
 }
 
 .button--ok{
-    color: rgb(6,0,107);
+    color: #fff;
     border: none;
-    background: rgb(0,212,255);
+    background: #091F44;
     padding: .5rem 1.5rem;
     border-radius: .5rem;
     width: 10rem;
     margin: 1rem 0 .5rem;
+    transition: all ease-in-out 200ms
+}
+
+.button--ok:hover, .logout__button:hover{
+    transform: scale(1.1);
 }
 
 .logout__button{
     color: white;
     border: none;
-    background: rgb(6,0,107);
-    padding: .5rem 1.5rem;
-    border-radius: .5rem;
-    width: 10rem;
-    margin: .5rem 0;
-}
-
-.delete__button{
-    color: white;
-    border: none;
-    background: rgb(200, 200, 200);
+    background: #091F44;
     padding: .5rem 1.5rem;
     border-radius: .5rem;
     width: 10rem;
@@ -205,8 +201,19 @@ form{
     transition: all ease-in-out 200ms
 }
 
-.delete__button:hover{
-    background: rgb(180, 180, 180);
+.delete__button{
+    color: white;
+    border: none;
+    background: #AEAEB0;
+    padding: .5rem 1.5rem;
+    border-radius: .5rem;
+    width: 10rem;
+    margin: .5rem 0;
+    transition: all ease-in-out 200ms
+}
+
+.delete__button:hover, .logout__button:hover{
+    background: #D1515A;
 }
 
 .button--ok:hover, .logout__button:hover, .delete__button:hover{

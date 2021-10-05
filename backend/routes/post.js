@@ -6,6 +6,6 @@ const postCtrl = require('../controllers/post');
 
 router.get( '/feed', postCtrl.displayFeed ); /* Affichage de tout les posts */
 router.post( '/create_post', postCtrl.createPost ); /* Création d'un post */
-router.delete( '/delete_post', postCtrl.deletePost ); /* Suppression des posts */
+router.delete( '/delete_post/:postId', postCtrl.deletePost ); /* Suppression des posts */
 
 module.exports = router;

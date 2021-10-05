@@ -7,16 +7,17 @@
             </div>
 
             <div class="publication" v-for="(post, idx) in posts" v-bind:key="idx">
-                <p>{{post.contenu}}</p>
+                <p>{{post.contenu}} {{post.postId}}</p>
+                <button v-if="role !== 'user'" class="delete_post_btn" @click="deletePost()" >X</button>
             </div>
 
-            <button v-if="role !== 'user'" class="delete_post_btn" @click="deletePost()" >Supprimer les publications</button>
+            
         </div>
 
-        <div class="poster" >
+        <form class="poster" >
             <textarea v-model="contenu" class="poster__input" name="contenu" id="" cols="30" rows="10" placeholder="Entrez votre message ici"></textarea>
             <button class="poster__button" @click="postMessage()">Publier</button>
-        </div>        
+        </form>        
         
     </div>
 </template>
@@ -26,18 +27,18 @@
 <script>
 
 import {mapState} from 'vuex'
-const axios = require('axios');
+/* const axios = require('axios');
 const instance = axios.create({
     baseURL: 'http://localhost:8080/posts'
-});
+}); */
 
 export default {
     name: 'Feed',
-    data: function () {
+    /* data: function () {
         return{
             role: this.$store.state.user.data.role
         }
-    },
+    }, */
     mounted: function(){
         this.$store.dispatch('getPosts');
         /* if(this.$store.state.user.data.id == -1 || this.$store.state.user.data.id == undefined){
@@ -62,7 +63,13 @@ export default {
             })
         },
         deletePost: function(){
-            instance.delete('/delete_post')
+            console.log(this)
+            let posts = this.$store.state.feedPosts;
+            for(let post in posts){
+                post = post.postId;
+                console.log(post)
+            }
+            
         }
     }
 }
@@ -73,10 +80,11 @@ export default {
 
 .container{
     position: relative;
+    background: #091F44;
 }
 
 .feed{
-    background: rgb(6,0,107);
+    background:#fff;
     width: 55%;
     height: 45rem;
     padding: 1rem 1.5rem;
@@ -96,18 +104,19 @@ export default {
 }
 
 .title{
-    color:rgb(255, 255, 255);
+    color: #091F44;
 }
 
 .publication{
-    background: rgb(0,212,255);
+    background: #091F44;
     padding: 1rem 1.5rem;
     border-radius: 1rem;
     box-shadow: rgb(20, 17, 70) 0.1rem 0.1rem 0.8rem;
     width: 60%;
     position: relative;
-    left: 8rem;
-    margin: 1rem 0 0;
+    left: 5rem;
+    margin: 1.5rem 0 0;
+    color: white;
 }
 
 .publication:nth-child(2n){
@@ -117,9 +126,10 @@ export default {
     box-shadow: rgb(20, 17, 70) 0.1rem 0.1rem 0.8rem;
     width: 60%;
     position: relative;
-    right: 8rem;
+    right: 5rem;
     left: initial;
-    margin: 1rem 0 0;
+    margin: 1.5rem 0 0;
+    color: #091F44;
 }
 
 .poster__input{
@@ -146,9 +156,9 @@ export default {
 }
 
 .poster__button{
-    color: rgb(6,0,107);
+    color: #fff;
     border: none;
-    background: rgb(0,212,255);
+    background: #D1515A;
     padding: .5rem 1.5rem;
     border-radius: .5rem;
     width: 10rem;
@@ -158,16 +168,24 @@ export default {
 .delete_post_btn{
     color: white;
     border: none;
-    background: red;
-    padding: .5rem 1.5rem;
-    border-radius: .5rem;
-    width: 10rem;
+    background: #D1515A;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: .5rem 0;
-    transition: all ease-in-out 200ms
+    box-shadow: #D1515A 0 .1rem .3rem;
+    transition: all ease-in-out 200ms;
+    position: absolute;
+    right: -1rem;
+    top: -1.5rem;
 }
 
 .delete_post_btn:hover{
     cursor: pointer;
+    transform: scale(1.2);
 }
 
 </style>
