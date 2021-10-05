@@ -1,8 +1,9 @@
 <template>
   <nav>
     <router-link to="/">Accueil</router-link>
+    <router-link to="/feed">Dernières actualités</router-link>
     <router-link to="/team">Team</router-link>
-    <router-link to="/profil/:id">Profil</router-link>
+    <router-link :to="'/user/profile/'+ id">Profil</router-link>
   </nav>
   <router-view />
 </template>

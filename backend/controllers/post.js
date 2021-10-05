@@ -1,12 +1,12 @@
 const fs = require('fs');
 const db = require('../database');
+const multer = require('multer');
+const upload = multer({dest: './images'})
 
 exports.createPost = (req, res) => {
-    const postObject = JSON.parse(req.body.contenu);
     const post = {
         userId: req.params.id,
-        ...postObject,
-        image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        contenu: req.body.contenu,
     }
     let sql = 'INSERT INTO post SET ?'
     db.query(sql, post, err =>{
@@ -18,13 +18,22 @@ exports.createPost = (req, res) => {
 }
 
 exports.displayFeed = (req, res) => {
-    let sql = 'SELECT contenu, image FROM post'
+    let sql = 'SELECT contenu FROM post ORDER BY postID DESC'
     let query = db.query(sql, (err, result) =>{
         if(err){
             throw err
         }
-        console.log(result)
-        res.send('Tous les derniers posts')
+        res.send(result)
+    })
+}
+
+exports.deletePost = (req, res) => {
+    let sql = 'DELETE FROM post'
+    let query = db.query(sql, (err, result) =>{
+        if(err){
+            throw err
+        }
+        res.status(200).json({message: 'Tous les posts ont été supprimés'})
     })
 }
 

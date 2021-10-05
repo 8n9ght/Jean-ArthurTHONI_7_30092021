@@ -22,7 +22,7 @@ export default {
     name: 'Team',
     mounted: function(){
         if(this.$store.state.user.data.id == -1 || this.$store.state.user.data.id == undefined){
-            this.$router.push('/');
+            this.$router.push('/notfound');
             return;
         }else{
             this.$store.dispatch('getTeam');
@@ -43,31 +43,6 @@ export default {
 </script>
 
 <style scoped>
-/* *:focus{
-    outline: none;
-}
-
-.container{
-    background: linear-gradient(45deg, rgba(6,0,107,1) 0%, rgba(9,120,121,1) 35%, rgba(0,212,255,1) 100%);
-    height: 52.7rem;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.page__title{
-    margin: 5rem 0 5rem;
-}
-
-.title{
-    color: rgb(255, 255, 255);
-    line-height: 30pt;
-}
-
-.sub_title{
-    margin: .5rem 0 0;
-    color: rgb(6,0,107);
-} */
 
 .profil__card{
     background: rgb(255, 255, 255);

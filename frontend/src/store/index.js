@@ -4,7 +4,11 @@ const axios = require('axios');
 
 const instance = axios.create({
     baseURL: 'http://localhost:8080/user'
-  });
+});
+
+const instancePost = axios.create({
+    baseURL: 'http://localhost:8080/posts'
+});
 
 let user = localStorage.getItem('user');
 if(!user){
@@ -30,17 +34,14 @@ const store = createStore({
         status: '',
         user: user,
         userInfos: {
-            getInfos(){
-                console.log(store.state.user.data)
-                return store.state.user.data
-                
-            }
+            nom:'',
+            prenom: '',
         },
-        teamInfos: {
-            getTeamInfos(){
-                console.log(store.state.user.data)
-                return store.state.user.data
-            }
+        message:{
+            contenu:'',
+        },
+        feedPosts: {
+            contenu: '',
         }
     },
     mutations: {
@@ -63,6 +64,12 @@ const store = createStore({
                 token: '',
             }
             localStorage.removeItem('user');
+        },
+        message: function(state, message){
+            state.message = message;
+        },
+        feedPosts: function(state, feedPosts){
+            state.feedPosts = feedPosts;
         }
     },
     actions: {
@@ -84,7 +91,6 @@ const store = createStore({
         signUp: ({commit}, userInfos) => {
             commit('setStatus', 'loading')
             return new Promise((resolve, reject) =>{
-                commit;
                 instance.post('/signup', userInfos)
                 .then(function (response) {
                     commit('setStatus', 'compte créé')
@@ -99,6 +105,7 @@ const store = createStore({
         getUserInfos: function(){
             axios.get('http://localhost:8080/user/profile/' + store.state.user.data.id)
                 .then(function(response){
+                    console.log(response)
                     store.commit('userInfos', response.data[0]);
                 })
         },
@@ -122,6 +129,27 @@ const store = createStore({
                     reject(error);
                 });
             })
+        },
+        postMessage: ({commit}, message) => {
+            commit('setStatus', 'loading')
+            return new Promise((resolve, reject) =>{
+                instancePost.post('/create_post', message)
+                .then(function (response) {
+                    console.log(response)
+                    commit('setStatus', 'post publié')
+                    resolve(response);
+                 })
+                .catch(function (error) {
+                    commit('setStatus', 'error_post')
+                    reject(error);
+                });
+            });
+        }, 
+        getPosts: function(){
+            axios.get('http://localhost:8080/posts/feed')
+                .then(function(response){
+                    store.commit('feedPosts', response.data)
+                })
         },
     }
 })    

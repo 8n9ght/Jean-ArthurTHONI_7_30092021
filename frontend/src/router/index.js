@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory} from 'vue-router';
 import Home from '@/views/Home.vue';
+import Feed from '@/views/Feed.vue';
 import Team from '@/views/Team.vue';
 import Profil from '@/views/Profil.vue';
 import NotFound from '@/views/NotFound.vue';
@@ -13,8 +14,15 @@ const routes = [
             title: 'Groupomania'
         }
     }, {
+        name: 'feed',
+        path: '/feed',
+        component: Feed,
+        meta:{
+            title: 'Actualités | Groupomania'
+        }
+    }, {
         name: 'profil',
-        path: '/profile/:id',
+        path: '/user/profile/:id',
         component: Profil,
         props:true,
         meta:{

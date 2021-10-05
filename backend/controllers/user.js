@@ -65,11 +65,11 @@ exports.showTeam = (req, res) => {
 exports.showProfil = (req, res) => {
     const sql = `SELECT id, nom, prenom, email FROM user WHERE id = ${req.params.id}`
     db.query(sql, (err, result) =>{
-        console.log(result)
         if(result.length === 0){
             return res.status(404).json({message:'Utilisateur non trouvé'})
         }
-        res.status(200).json(result)
+        res.send(result)
+        console.log(result)
     })
 };
 
@@ -83,7 +83,6 @@ exports.updateProfil = (req, res) => {
         let newPass = hash
         let sql = `UPDATE user SET nom = '${newNom}', prenom = '${newPrenom}', email = '${newEmail}', mot_pass = '${newPass}' WHERE id = ${req.params.id}`;
         let query = db.query(sql, (err, result) => {
-            console.log(result)
             if(result === undefined){
                return res.status(400).json({message:'L\'email renseignée est déjà utilisée'})
             }
@@ -99,7 +98,6 @@ exports.updateProfil = (req, res) => {
 exports.deleteProfil = (req, res) => {
     let sql = `DELETE FROM user WHERE id = ${req.params.id}`
     let query = db.query(sql, (err, result) => {
-        console.log(result)
         if(result.affectedRows === 0){
            return res.status(500).json({message:'Le compte que vous essayez de supprimer n\'existe pas'})
         }

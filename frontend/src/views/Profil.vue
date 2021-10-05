@@ -10,7 +10,6 @@
             <p class="user__infos">{{user.nom}}</p>
             <p class="user__infos">{{user.prenom}}</p>
             <p class="user__infos">{{user.email}}</p>
-            <p>{{this.$store.state.user.data.id}}</p>
 
             <form action="">
                 <h2 class="sub_title">Modifier mon profil</h2>
@@ -37,6 +36,7 @@
 
             <button class="button--ok" @click="upDate()">Mettre à jour mes informations</button>
             <button class="logout__button" @click="logOut()">Déconnexion</button>
+            <button class="delete__button" @click="deleteAccount()">Supprimer mon compte</button>
         </div>
     </div>
 </template>
@@ -44,6 +44,10 @@
 <script>
 
 import {mapState} from 'vuex'
+const axios = require('axios');
+const instance = axios.create({
+    baseURL: 'http://localhost:8080/user'
+});
 
 export default {
     name: 'Profil',
@@ -52,7 +56,7 @@ export default {
             this.$router.push('/');
             return;
         }else{
-            this.$router.push('/profile/' + this.$store.state.user.data.id);
+            this.$router.push('/user/profile/' + this.$store.state.user.data.id);
         }
         this.$store.dispatch('getUserInfos');
     },
@@ -63,7 +67,6 @@ export default {
     },
     methods: {
         logOut: function(){
-            this.$store.commit('logout');
             this.$router.push('/');
         },
         upDate: function(){
@@ -73,9 +76,16 @@ export default {
                 email: this.email,
                 password: this.password,
             })
+            .then(function(){
+                this.$router.push('/user/profile/' + this.$store.state.user.data.id);
+            })
             .catch(function(error){
                 console.log(error)
             })
+        },
+        deleteAccount: function(){
+            this.$router.push('/');
+            instance.delete('/profile_delete/' + this.$store.state.user.data.id)
         },
     }
     
@@ -96,7 +106,7 @@ export default {
 }
 
 .page__title{
-    margin: 5rem 0 5rem;
+    margin: 5rem 0 2rem;
 }
 
 .title{
@@ -171,7 +181,7 @@ form{
     padding: .5rem 1.5rem;
     border-radius: .5rem;
     width: 10rem;
-    margin: 1rem 0;
+    margin: 1rem 0 .5rem;
 }
 
 .logout__button{
@@ -181,9 +191,25 @@ form{
     padding: .5rem 1.5rem;
     border-radius: .5rem;
     width: 10rem;
+    margin: .5rem 0;
 }
 
-.button--ok:hover, .logout__button:hover{
+.delete__button{
+    color: white;
+    border: none;
+    background: rgb(200, 200, 200);
+    padding: .5rem 1.5rem;
+    border-radius: .5rem;
+    width: 10rem;
+    margin: .5rem 0;
+    transition: all ease-in-out 200ms
+}
+
+.delete__button:hover{
+    background: rgb(180, 180, 180);
+}
+
+.button--ok:hover, .logout__button:hover, .delete__button:hover{
     cursor: pointer;
 }
 
