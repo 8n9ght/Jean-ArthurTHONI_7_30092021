@@ -42,6 +42,9 @@ const store = createStore({
         },
         feedPosts: {
             contenu: '',
+            
+        },
+        onePost:{
             postId: '',
         }
     },
@@ -136,7 +139,6 @@ const store = createStore({
             return new Promise((resolve, reject) =>{
                 instancePost.post('/create_post', message)
                 .then(function (response) {
-                    console.log(response)
                     commit('setStatus', 'post publié')
                     resolve(response);
                  })
@@ -149,7 +151,6 @@ const store = createStore({
         getPosts: function(){
             axios.get('http://localhost:8080/posts/feed')
                 .then(function(response){
-                    console.log(response.data[0].postId)
                     store.commit('feedPosts', response.data)
                 })
         },

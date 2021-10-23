@@ -7,8 +7,12 @@
             </div>
 
             <div class="publication" v-for="(post, idx) in posts" v-bind:key="idx">
-                <p>{{post.contenu}} {{post.postId}}</p>
-                <button v-if="role !== 'user'" class="delete_post_btn" @click="deletePost()" >X</button>
+                <div class="publication__content">
+                    <p class="user">{{post.postId}}</p>
+                    <p class="content">{{post.contenu}}</p>
+                    <p class="content__date">{{new Date(post.postDate).toLocaleString('fr')}}</p>
+                </div>
+                <!-- <button v-if="role !== 'user'" class="delete_post_btn" @click="deletePost(post.postId)" >X</button> -->
             </div>
 
             
@@ -27,10 +31,10 @@
 <script>
 
 import {mapState} from 'vuex'
-/* const axios = require('axios');
+const axios = require('axios');
 const instance = axios.create({
     baseURL: 'http://localhost:8080/posts'
-}); */
+});
 
 export default {
     name: 'Feed',
@@ -41,6 +45,7 @@ export default {
     }, */
     mounted: function(){
         this.$store.dispatch('getPosts');
+        console.log(this)
         /* if(this.$store.state.user.data.id == -1 || this.$store.state.user.data.id == undefined){
             this.$router.push('/notfound');
             return;
@@ -58,17 +63,16 @@ export default {
             this.$store.dispatch('postMessage', {
                 contenu: this.contenu,
             })
+            .then(function(){
+                console.log(this.contenu)
+            })
             .catch(function(error){
                 console.log(error)
             })
         },
-        deletePost: function(){
-            console.log(this)
-            let posts = this.$store.state.feedPosts;
-            for(let post in posts){
-                post = post.postId;
-                console.log(post)
-            }
+        deletePost: function(id){
+            console.log(id)
+            instance.delete('/delete_post/'+ id)
             
         }
     }
@@ -119,6 +123,17 @@ export default {
     color: white;
 }
 
+.publication .content__date{
+    font-size: .8rem;
+    color: white;
+    text-align: right;
+}
+
+.publication .content{
+    text-align: left;
+    margin: .6rem 0;
+}
+
 .publication:nth-child(2n){
     background: rgb(255, 255, 255);
     padding: 1rem 1.5rem;
@@ -130,6 +145,16 @@ export default {
     left: initial;
     margin: 1.5rem 0 0;
     color: #091F44;
+}
+
+.publication:nth-child(2n) .content__date{
+    font-size: .8rem;
+    color: #091F44;
+}
+
+.content__date{
+    color:red;
+    
 }
 
 .poster__input{
@@ -150,7 +175,7 @@ export default {
     flex-direction: column;
     border-radius: 1rem;
     box-shadow: rgb(20, 17, 70) 0.1rem 0.1rem 0.8rem;
-    position: absolute;
+    position: fixed;
     bottom: 3rem;
     right: 3rem;
 }

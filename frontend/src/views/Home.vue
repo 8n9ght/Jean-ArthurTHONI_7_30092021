@@ -107,7 +107,7 @@ export default{
                 password: this.password,
             })
             .then(function(){
-                self.$router.push('/user/profile/:id')
+                self.$router.push('/feed')
             }, function(error){
                 console.log(error)
             })
