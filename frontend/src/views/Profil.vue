@@ -52,7 +52,7 @@ const instance = axios.create({
 export default {
     name: 'Profil',
     mounted: function(){
-        if(this.$store.state.user.data.id == -1 || this.$store.state.user.data.id == undefined){
+        if(this.data.id == -1 || this.data.id == undefined){
             this.$router.push('/');
             return;
         }else{
@@ -67,7 +67,8 @@ export default {
     },
     methods: {
         logOut: function(){
-            this.$router.push('/');
+            this.$store.dispatch('logOut')
+            this.$router.push('/home');
         },
         upDate: function(){
             this.$store.dispatch('upDate', {

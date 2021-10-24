@@ -34,7 +34,7 @@ const store = createStore({
         status: '',
         user: user,
         userInfos: {
-            nom:'',
+            nom: '',
             prenom: '',
         },
         message:{
@@ -62,13 +62,6 @@ const store = createStore({
         teamInfos: function(state, teamInfos){
             state.teamInfos = teamInfos;
         },
-        logOut: function(state){
-            state.user = {
-                id: -1,
-                token: '',
-            }
-            localStorage.removeItem('user');
-        },
         message: function(state, message){
             state.message = message;
         },
@@ -91,6 +84,13 @@ const store = createStore({
                     reject(error);
               });
             });
+        },
+        logOut: function(state){
+            state.user = {
+                id: -1,
+                token: '',
+            }
+            localStorage.removeItem('user');
         },
         signUp: ({commit}, userInfos) => {
             commit('setStatus', 'loading')
@@ -151,6 +151,7 @@ const store = createStore({
         getPosts: function(){
             axios.get('http://localhost:8080/posts/feed')
                 .then(function(response){
+                    console.log(response);
                     store.commit('feedPosts', response.data)
                 })
         },

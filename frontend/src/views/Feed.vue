@@ -8,7 +8,7 @@
 
             <div class="publication" v-for="(post, idx) in posts" v-bind:key="idx">
                 <div class="publication__content">
-                    <p class="user">{{post.postId}}</p>
+                    <p class="user">{{post.prenom}} {{post.nom}} </p>
                     <p class="content">{{post.contenu}}</p>
                     <p class="content__date">{{new Date(post.postDate).toLocaleString('fr')}}</p>
                 </div>
@@ -20,7 +20,7 @@
 
         <form class="poster" >
             <textarea v-model="contenu" class="poster__input" name="contenu" id="" cols="30" rows="10" placeholder="Entrez votre message ici"></textarea>
-            <button class="poster__button" @click="postMessage()">Publier</button>
+            <button class="poster__button" type="button" @click="postMessage()">Publier</button>
         </form>        
         
     </div>
@@ -45,26 +45,24 @@ export default {
     }, */
     mounted: function(){
         this.$store.dispatch('getPosts');
-        console.log(this)
-        /* if(this.$store.state.user.data.id == -1 || this.$store.state.user.data.id == undefined){
+        console.log(this.$store.state);
+        console.log('test')
+/*         if(this.$store.state.user.data.id == -1 || this.$store.state.user.data.id == undefined){
             this.$router.push('/notfound');
             return;
-        }else{
-            
         } */
     },
     computed: {
         ...mapState({
             posts: 'feedPosts',
+            user: 'user',
         })  
     },
     methods: {
         postMessage: function(){
+
             this.$store.dispatch('postMessage', {
                 contenu: this.contenu,
-            })
-            .then(function(){
-                console.log(this.contenu)
             })
             .catch(function(error){
                 console.log(error)
@@ -77,7 +75,7 @@ export default {
         }
     }
 }
-    
+
 </script>
 
 <style scoped>
@@ -123,15 +121,22 @@ export default {
     color: white;
 }
 
+.publication .user{
+    text-align: left;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color:red;
+}
+
+.publication .content, .user{
+    text-align: left;
+    margin: .6rem 0;
+}
+
 .publication .content__date{
     font-size: .8rem;
     color: white;
     text-align: right;
-}
-
-.publication .content{
-    text-align: left;
-    margin: .6rem 0;
 }
 
 .publication:nth-child(2n){
