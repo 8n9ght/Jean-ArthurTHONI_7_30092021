@@ -8,7 +8,7 @@
 
             <div class="publication" v-for="(post, idx) in posts" v-bind:key="idx">
                 <div class="publication__content">
-                    <p class="user">{{post.prenom}} {{post.nom}} </p>
+                    <p class="user">{{post.prenom}} {{post.nom}}</p>
                     <p class="content">{{post.contenu}}</p>
                     <p class="content__date">{{new Date(post.postDate).toLocaleString('fr')}}</p>
                 </div>
@@ -20,7 +20,7 @@
 
         <form class="poster" >
             <textarea v-model="contenu" class="poster__input" name="contenu" id="" cols="30" rows="10" placeholder="Entrez votre message ici"></textarea>
-            <button class="poster__button" type="button" @click="postMessage()">Publier</button>
+            <button class="poster__button" @click="postMessage()">Publier</button>
         </form>        
         
     </div>
@@ -44,13 +44,12 @@ export default {
         }
     }, */
     mounted: function(){
+        console.log(this)
         this.$store.dispatch('getPosts');
-        console.log(this.$store.state);
-        console.log('test')
-/*         if(this.$store.state.user.data.id == -1 || this.$store.state.user.data.id == undefined){
+        if(this.user.id == -1 || this.user.token == ''){
             this.$router.push('/notfound');
             return;
-        } */
+        }
     },
     computed: {
         ...mapState({
@@ -60,9 +59,9 @@ export default {
     },
     methods: {
         postMessage: function(){
-
             this.$store.dispatch('postMessage', {
                 contenu: this.contenu,
+                id: this.user.data.id,
             })
             .catch(function(error){
                 console.log(error)

@@ -5,18 +5,37 @@
     </div>
     <router-link to="/">Accueil</router-link>
     <router-link to="/feed">Dernières actualités</router-link>
-    <router-link to="/team">Team</router-link>
-    <router-link :to="'/user/profile/'+ id">Profil</router-link>
+    <router-link to="/team" v-if="role !== admin">Team</router-link>
+    <router-link :to="'/user/profile/'+ id" v-if="user.id !== -1">Profil</router-link>
   </nav>
   <router-view />
 </template>
 
 <script>
 
+import {mapState} from 'vuex'
+
 export default {
   name: 'App',
-  components: {
-  }
+  data: function () {
+        /* return{
+            role: this.$store.state.user.data.role
+        } */
+        /* console.log(this.$store) */
+    },
+  mounted: function(){
+    console.log(this)
+    if(this.user.id == -1 || this.user.token == ''){
+            this.$router.push('/');
+            return;
+        }
+  },
+  computed: {
+      ...mapState({
+          posts: 'feedPosts',
+          user: 'user',
+      })  
+  },
 }
 </script>
 

@@ -33,10 +33,7 @@ const store = createStore({
     state: {
         status: '',
         user: user,
-        userInfos: {
-            nom: '',
-            prenom: '',
-        },
+        userInfos: user,
         message:{
             contenu:'',
         },
@@ -44,9 +41,6 @@ const store = createStore({
             contenu: '',
             
         },
-        onePost:{
-            postId: '',
-        }
     },
     mutations: {
         setStatus: function(state, status){
@@ -56,8 +50,8 @@ const store = createStore({
             localStorage.setItem('user', JSON.stringify(user));
             state.user = user;
         },
-        userInfos: function(state, userInfos){
-            state.userInfos = userInfos;
+        userInfos: function(state, user){
+            state.userInfos = user;
         },
         teamInfos: function(state, teamInfos){
             state.teamInfos = teamInfos;
@@ -85,11 +79,7 @@ const store = createStore({
               });
             });
         },
-        logOut: function(state){
-            state.user = {
-                id: -1,
-                token: '',
-            }
+        logOut: function(){
             localStorage.removeItem('user');
         },
         signUp: ({commit}, userInfos) => {
@@ -109,7 +99,6 @@ const store = createStore({
         getUserInfos: function(){
             axios.get('http://localhost:8080/user/profile/' + store.state.user.data.id)
                 .then(function(response){
-                    console.log(response)
                     store.commit('userInfos', response.data[0]);
                 })
         },
@@ -134,16 +123,14 @@ const store = createStore({
                 });
             })
         },
-        postMessage: ({commit}, message) => {
+        postMessage: ({commit}, posts) => {
             commit('setStatus', 'loading')
             return new Promise((resolve, reject) =>{
-                instancePost.post('/create_post', message)
+                instancePost.post('/create_post', posts)
                 .then(function (response) {
-                    commit('setStatus', 'post publié')
                     resolve(response);
                  })
                 .catch(function (error) {
-                    commit('setStatus', 'error_post')
                     reject(error);
                 });
             });
@@ -151,7 +138,7 @@ const store = createStore({
         getPosts: function(){
             axios.get('http://localhost:8080/posts/feed')
                 .then(function(response){
-                    console.log(response);
+                    console.log(response)
                     store.commit('feedPosts', response.data)
                 })
         },

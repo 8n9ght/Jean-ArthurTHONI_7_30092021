@@ -7,9 +7,9 @@
         <div class="form">
             <h2 class="sub_title">Mes informations</h2>
 
-            <p class="user__infos">{{user.nom}}</p>
-            <p class="user__infos">{{user.prenom}}</p>
-            <p class="user__infos">{{user.email}}</p>
+            <p class="user__infos">{{user.data.nom}}</p>
+            <p class="user__infos">{{user.data.prenom}}</p>
+            <p class="user__infos">{{user.data.email}}</p>
 
             <form action="">
                 <h2 class="sub_title">Modifier mon profil</h2>
@@ -52,8 +52,9 @@ const instance = axios.create({
 export default {
     name: 'Profil',
     mounted: function(){
-        if(this.data.id == -1 || this.data.id == undefined){
-            this.$router.push('/');
+        console.log(this.user.data.id)
+        if(this.user.data.id == -1 || this.user.data.id == undefined){
+            this.$router.push('/home');
             return;
         }else{
             this.$router.push('/user/profile/' + this.$store.state.user.data.id);
@@ -62,13 +63,13 @@ export default {
     },
     computed: {
         ...mapState({
-            user: 'userInfos',
+            user: 'user',
         })  
     },
     methods: {
         logOut: function(){
             this.$store.dispatch('logOut')
-            this.$router.push('/home');
+            this.$router.push('/');
         },
         upDate: function(){
             this.$store.dispatch('upDate', {
@@ -85,7 +86,7 @@ export default {
             })
         },
         deleteAccount: function(){
-            this.$router.push('/');
+            this.$router.push('/home');
             instance.delete('/profile_delete/' + this.$store.state.user.data.id)
         },
     }
