@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory} from 'vue-router';
 import Home from '@/views/Home.vue';
 import Feed from '@/views/Feed.vue';
-import Team from '@/views/Team.vue';
 import Profil from '@/views/Profil.vue';
 import NotFound from '@/views/NotFound.vue';
 
@@ -27,13 +26,6 @@ const routes = [
         props:true,
         meta:{
             title: 'Profil | Groupomania'
-        }
-    }, {
-        name: 'team',
-        path: '/team',
-        component: Team,
-        meta:{
-            title: 'Équipe | Groupomania'
         }
     },{
         name: 'NotFound',

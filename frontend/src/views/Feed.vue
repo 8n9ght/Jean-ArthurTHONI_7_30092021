@@ -44,11 +44,11 @@ export default {
         }
     }, */
     mounted: function(){
-        console.log(this)
         this.$store.dispatch('getPosts');
-        if(this.user.id == -1 || this.user.token == ''){
-            this.$router.push('/notfound');
-            return;
+        const userData = JSON.parse(sessionStorage.getItem('user'));
+        const token = userData.token;
+        if(token == ''){
+            this.$router.push('/');
         }
     },
     computed: {
@@ -63,12 +63,14 @@ export default {
                 contenu: this.contenu,
                 id: this.user.data.id,
             })
+            /* .then(function(){
+                this.$store.push('/feed');
+            }) */
             .catch(function(error){
                 console.log(error)
             })
         },
         deletePost: function(id){
-            console.log(id)
             instance.delete('/delete_post/'+ id)
             
         }

@@ -31,10 +31,6 @@
                 <div class="input">
                     <input v-model="password" type="password" name="password" id="pass" placeholder="Entrez votre mot de passe" autocomplete="on">
                 </div>
-
-                <span class="forgot" v-if="mode == 'login'">
-                    <p class="forgot__content">Vous avez oublié votre mot de passe ?<br>Réinitialisez-le</p>
-                </span>
                 
                 <span class="forgot" v-if="mode == 'login' && status == 'error_login'">
                     <p class="error_login">Mot de passe et ou email incorrect</p>
@@ -91,7 +87,10 @@ export default{
                 }
             }
         },
-        ...mapState(['status'])
+        ...mapState({
+            user: 'user',
+            status: 'status'
+        })
     },
     methods:{
         switchLogin: function(){

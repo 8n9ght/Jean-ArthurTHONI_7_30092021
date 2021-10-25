@@ -49,18 +49,6 @@ exports.login = (req, res) => {
     })
 };
 
-//affichage de l'équipe
-exports.showTeam = (req, res) => {
-    let sql = 'SELECT nom, prenom FROM user'
-    let query = db.query(sql, (err, result) =>{
-        if(err){
-            throw err
-        }
-        res.status(200).json(result)
-    })
-};
-
-
 //affichage d'un membre
 exports.showProfil = (req, res) => {
     const sql = `SELECT id, nom, prenom, email FROM user WHERE id = ${req.params.id}`
@@ -69,7 +57,6 @@ exports.showProfil = (req, res) => {
             return res.status(404).json({message:'Utilisateur non trouvé'})
         }
         res.send(result)
-        console.log(result)
     })
 };
 

@@ -52,12 +52,14 @@ const instance = axios.create({
 export default {
     name: 'Profil',
     mounted: function(){
-        console.log(this.user.data.id)
-        if(this.user.data.id == -1 || this.user.data.id == undefined){
-            this.$router.push('/home');
-            return;
-        }else{
-            this.$router.push('/user/profile/' + this.$store.state.user.data.id);
+        console.log(this.user.data)
+        const userData = JSON.parse(sessionStorage.getItem('user'));
+        const token = userData.token;
+        if(token == ''){
+            this.$router.push('/');
+        }
+        else{
+            this.$router.push('/user/profile/' + userData.data.id);
         }
         this.$store.dispatch('getUserInfos');
     },
@@ -68,8 +70,9 @@ export default {
     },
     methods: {
         logOut: function(){
-            this.$store.dispatch('logOut')
             this.$router.push('/');
+            this.$store.dispatch('logOut');
+            console.log('déconnecté');
         },
         upDate: function(){
             this.$store.dispatch('upDate', {

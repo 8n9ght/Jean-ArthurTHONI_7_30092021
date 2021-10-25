@@ -10,30 +10,13 @@ const instancePost = axios.create({
     baseURL: 'http://localhost:8080/posts'
 });
 
-let user = localStorage.getItem('user');
-if(!user){
-    user = {
-        id: -1,
-        token: '',
-    } 
-}else{
-    try{
-        user = JSON.parse(user);
-        instance.defaults.headers.common['Authorization'] = store.state.user.token;
-    }catch{
-        user = {
-            id: -1,
-        token: '',
-        } 
-    }
-    
-}
+let user = JSON.parse(sessionStorage.getItem('user'));
+console.log(user);
 
 const store = createStore({
     state: {
         status: '',
         user: user,
-        userInfos: user,
         message:{
             contenu:'',
         },
@@ -47,14 +30,11 @@ const store = createStore({
             state.status = status;
         },
         logUser: function(state, user){
-            localStorage.setItem('user', JSON.stringify(user));
+            sessionStorage.setItem('user', JSON.stringify(user));
             state.user = user;
         },
         userInfos: function(state, user){
             state.userInfos = user;
-        },
-        teamInfos: function(state, teamInfos){
-            state.teamInfos = teamInfos;
         },
         message: function(state, message){
             state.message = message;
@@ -80,7 +60,7 @@ const store = createStore({
             });
         },
         logOut: function(){
-            localStorage.removeItem('user');
+            sessionStorage.removeItem('user');
         },
         signUp: ({commit}, userInfos) => {
             commit('setStatus', 'loading')
@@ -100,13 +80,6 @@ const store = createStore({
             axios.get('http://localhost:8080/user/profile/' + store.state.user.data.id)
                 .then(function(response){
                     store.commit('userInfos', response.data[0]);
-                })
-        },
-        getTeam: function(){
-            axios.get('http://localhost:8080/user/team')
-                .then(function(response){
-                    console.log(response.data)
-                    store.commit('teamInfos', response.data);
                 })
         },
         upDate: ({commit}, userInfos) => {
@@ -138,7 +111,6 @@ const store = createStore({
         getPosts: function(){
             axios.get('http://localhost:8080/posts/feed')
                 .then(function(response){
-                    console.log(response)
                     store.commit('feedPosts', response.data)
                 })
         },
