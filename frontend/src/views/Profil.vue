@@ -52,7 +52,6 @@ const instance = axios.create({
 export default {
     name: 'Profil',
     mounted: function(){
-        console.log(this.user.data)
         const userData = JSON.parse(sessionStorage.getItem('user'));
         const token = userData.token;
         if(token == ''){

@@ -10,13 +10,13 @@ exports.createPost = (req, res) => {
     if(err){
         res.status(500).json({message: 'Votre publication n\'a pas été publié'})
     }
-    res.status(201).json({ message: 'Publication créée'})
+    res.status(201).json({message: 'Publication créée'})
     })
 }
 
 exports.displayFeed = (req, res) => {
     /* SELECT nom, prenom, contenu, postDate FROM groupomania.post INNER JOIN groupomania.user ON post.userId = user.id ORDER BY postId DESC */
-    let sql = 'SELECT nom, prenom, contenu, postDate FROM groupomania.post INNER JOIN groupomania.user ON post.userId = user.id ORDER BY postId DESC'
+    let sql = 'SELECT nom, prenom, contenu, role, postId, postDate FROM groupomania.post INNER JOIN groupomania.user ON post.userId = user.id ORDER BY postId DESC'
     let query = db.query(sql, (err, result) =>{
         if(err){
             throw err

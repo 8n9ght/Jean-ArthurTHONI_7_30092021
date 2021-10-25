@@ -11,7 +11,6 @@ const instancePost = axios.create({
 });
 
 let user = JSON.parse(sessionStorage.getItem('user'));
-console.log(user);
 
 const store = createStore({
     state: {
@@ -41,7 +40,7 @@ const store = createStore({
         },
         feedPosts: function(state, feedPosts){
             state.feedPosts = feedPosts;
-        }
+        },
     },
     actions: {
         logIn: ({commit}, userInfos) => {

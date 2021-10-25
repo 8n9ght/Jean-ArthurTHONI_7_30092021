@@ -5,20 +5,20 @@
     </div>
     <router-link to="/">Accueil</router-link>
     <router-link to="/feed">Dernières actualités</router-link>
-    <router-link :to="'/user/profile/' + id">Profil</router-link>
-    <p>{{}}</p>
+    <router-link :to="'/user/profile/' + id" v-if="userData !== 0">Profil</router-link>
   </nav>
   <router-view />
 </template>
 
 <script>
 
-import {mapState} from 'vuex'
+import {mapState} from 'vuex';
+
+const userData = sessionStorage.length;
 
 export default {
   name: 'App',
   mounted: function(){
-      const userData = sessionStorage.length;
       if(userData == 0){
           this.$router.push('/');
       }

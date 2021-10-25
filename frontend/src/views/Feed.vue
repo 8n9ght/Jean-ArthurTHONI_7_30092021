@@ -12,7 +12,7 @@
                     <p class="content">{{post.contenu}}</p>
                     <p class="content__date">{{new Date(post.postDate).toLocaleString('fr')}}</p>
                 </div>
-                <!-- <button v-if="role !== 'user'" class="delete_post_btn" @click="deletePost(post.postId)" >X</button> -->
+                <button v-if="user.data.role !== 'user'" class="delete_post_btn" @click="deletePost(post.postId)" >X</button>
             </div>
 
             
@@ -35,6 +35,7 @@ const axios = require('axios');
 const instance = axios.create({
     baseURL: 'http://localhost:8080/posts'
 });
+
 
 export default {
     name: 'Feed',
@@ -63,15 +64,16 @@ export default {
                 contenu: this.contenu,
                 id: this.user.data.id,
             })
-            /* .then(function(){
-                this.$store.push('/feed');
-            }) */
+            .then(function(){
+                console.log(this)
+            })
             .catch(function(error){
                 console.log(error)
             })
         },
         deletePost: function(id){
             instance.delete('/delete_post/'+ id)
+            this.$router.go()
             
         }
     }
