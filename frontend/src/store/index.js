@@ -11,6 +11,7 @@ const instancePost = axios.create({
 });
 
 let user = JSON.parse(sessionStorage.getItem('user'));
+/* let userUpdated = user; */
 
 const store = createStore({
     state: {
@@ -23,6 +24,11 @@ const store = createStore({
             contenu: '',
             
         },
+        userData: {
+            nom: '',
+            prenom: '',
+            email: '',
+        }
     },
     mutations: {
         setStatus: function(state, status){
@@ -41,6 +47,9 @@ const store = createStore({
         feedPosts: function(state, feedPosts){
             state.feedPosts = feedPosts;
         },
+        userData: function(state, userData){
+            state.userData = userData;
+        }
     },
     actions: {
         logIn: ({commit}, userInfos) => {
@@ -78,19 +87,20 @@ const store = createStore({
         getUserInfos: function(){
             axios.get('http://localhost:8080/user/profile/' + store.state.user.data.id)
                 .then(function(response){
-                    store.commit('userInfos', response.data[0]);
+                    console.log(response)
+                    store.commit('userData', response.data[0]);
                 })
         },
-        upDate: ({commit}, userInfos) => {
-            commit('setStatus', 'loading')
+        upDate: ({commit}, userData) => {
             return new Promise((resolve, reject) =>{
-                instance.put('/profile_update/' + store.state.user.data.id, userInfos)
+                instance.put('/profile_update/' + store.state.user.data.id, userData)
                 .then(function (response) {
-                    commit('setStatus', 'user_updated')
+                    commit('userData', response)
+                    
                     resolve(response);
                 })
                 .catch(function (error) {
-                    commit('setStatus', 'error_signup')
+                    commit('setStatus', 'error_update')
                     reject(error);
                 });
             })

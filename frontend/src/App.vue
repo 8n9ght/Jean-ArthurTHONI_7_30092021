@@ -5,7 +5,7 @@
     </div>
     <router-link to="/">Accueil</router-link>
     <router-link to="/feed">Dernières actualités</router-link>
-    <router-link :to="'/user/profile/' + id" v-if="userData !== 0">Profil</router-link>
+    <router-link :to="'/user/profile/' + id" v-if="user !== null">Profil</router-link>
   </nav>
   <router-view />
 </template>
@@ -14,11 +14,10 @@
 
 import {mapState} from 'vuex';
 
-const userData = sessionStorage.length;
-
 export default {
   name: 'App',
   mounted: function(){
+    const userData = sessionStorage.length;
       if(userData == 0){
           this.$router.push('/');
       }

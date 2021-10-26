@@ -7,14 +7,14 @@
         <div class="form">
             <h2 class="sub_title">Mes informations</h2>
 
-            <p class="user__infos">{{user.data.nom}}</p>
-            <p class="user__infos">{{user.data.prenom}}</p>
-            <p class="user__infos">{{user.data.email}}</p>
+            <p class="user__infos">{{userData.nom}}</p>
+            <p class="user__infos">{{userData.prenom}}</p>
+            <p class="user__infos">{{userData.email}}</p>
 
             <form action="">
                 <h2 class="sub_title">Modifier mon profil</h2>
                 <div class="input">
-                    <input v-model="nom" type="text" name="nom" id="lname" placeholder="Entrez votre nom">
+                    <input v-model="nom" type="text" name="nom" id="lname" placeholder="userData" >
                 </div>
 
                 <div class="input">
@@ -32,9 +32,11 @@
                 <span class="forgot" v-if="status == 'error_signup'">
                     <p class="error_login">Adresse email déjà utilisée</p>
                 </span>
+
+                <button class="button--ok" @click="upDate()">Mettre à jour mes informations</button>
             </form>
 
-            <button class="button--ok" @click="upDate()">Mettre à jour mes informations</button>
+            
             <button class="logout__button" @click="logOut()">Déconnexion</button>
             <button class="delete__button" @click="deleteAccount()">Supprimer mon compte</button>
         </div>
@@ -48,6 +50,8 @@ const axios = require('axios');
 const instance = axios.create({
     baseURL: 'http://localhost:8080/user'
 });
+
+
 
 export default {
     name: 'Profil',
@@ -65,6 +69,7 @@ export default {
     computed: {
         ...mapState({
             user: 'user',
+            userData: 'userData',
         })  
     },
     methods: {
@@ -72,6 +77,8 @@ export default {
             this.$router.push('/');
             this.$store.dispatch('logOut');
             console.log('déconnecté');
+            this.$router.go()
+
         },
         upDate: function(){
             this.$store.dispatch('upDate', {
@@ -79,16 +86,14 @@ export default {
                 prenom: this.prenom,
                 email: this.email,
                 password: this.password,
-            })
-            .then(function(){
-                this.$router.push('/user/profile/' + this.$store.state.user.data.id);
-            })
+            },
+            this.$router.go())
             .catch(function(error){
                 console.log(error)
             })
         },
         deleteAccount: function(){
-            this.$router.push('/home');
+            this.$router.push('/');
             instance.delete('/profile_delete/' + this.$store.state.user.data.id)
         },
     }
