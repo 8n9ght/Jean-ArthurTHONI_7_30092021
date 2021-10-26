@@ -14,7 +14,7 @@
             <form action="">
                 <h2 class="sub_title">Modifier mon profil</h2>
                 <div class="input">
-                    <input v-model="nom" type="text" name="nom" id="lname" placeholder="userData" >
+                    <input v-model="nom" type="text" name="nom" id="lname" placeholder="Entrez votre nom" >
                 </div>
 
                 <div class="input">
@@ -35,9 +35,7 @@
 
                 <button class="button--ok" @click="upDate()">Mettre à jour mes informations</button>
             </form>
-
-            
-            <button class="logout__button" @click="logOut()">Déconnexion</button>
+ 
             <button class="delete__button" @click="deleteAccount()">Supprimer mon compte</button>
         </div>
     </div>
@@ -73,13 +71,6 @@ export default {
         })  
     },
     methods: {
-        logOut: function(){
-            this.$router.push('/');
-            this.$store.dispatch('logOut');
-            console.log('déconnecté');
-            this.$router.go()
-
-        },
         upDate: function(){
             this.$store.dispatch('upDate', {
                 nom: this.nom,
@@ -195,21 +186,6 @@ form{
     transition: all ease-in-out 200ms
 }
 
-.button--ok:hover, .logout__button:hover{
-    transform: scale(1.1);
-}
-
-.logout__button{
-    color: white;
-    border: none;
-    background: #091F44;
-    padding: .5rem 1.5rem;
-    border-radius: .5rem;
-    width: 10rem;
-    margin: .5rem 0;
-    transition: all ease-in-out 200ms
-}
-
 .delete__button{
     color: white;
     border: none;
@@ -221,12 +197,13 @@ form{
     transition: all ease-in-out 200ms
 }
 
-.delete__button:hover, .logout__button:hover{
+.delete__button:hover{
     background: #D1515A;
 }
 
-.button--ok:hover, .logout__button:hover, .delete__button:hover{
+.button--ok:hover, .delete__button:hover{
     cursor: pointer;
+    transform: scale(1.1);
 }
 
 

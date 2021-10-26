@@ -6,6 +6,14 @@
     <router-link to="/">Accueil</router-link>
     <router-link to="/feed">Dernières actualités</router-link>
     <router-link :to="'/user/profile/' + id" v-if="user !== null">Profil</router-link>
+    <div class="user-management" v-if="user !== null">
+      <p class="presentation">Bonjour <span>{{user.data.prenom}}</span></p>
+      <span class="logout">
+        <img class="logout__button" src="./assets/logout.png" alt="déconnexion groupomania" @click="logOut()">
+        <p>Se déconnecter</p>
+      </span>
+    </div>
+    
   </nav>
   <router-view />
 </template>
@@ -27,6 +35,14 @@ export default {
           posts: 'feedPosts',
           user: 'user',
       })  
+  },
+  methods: {
+        logOut: function(){
+            this.$router.push('/');
+            this.$store.dispatch('logOut');
+            console.log('déconnecté');
+            this.$router.go()
+        }
   },
 }
 </script>
@@ -73,5 +89,46 @@ a {
 a:hover{
   background: #D1515A;
   color: #fff;
+}
+
+.user-management{
+  position: absolute;
+  right: 5rem;
+  display: flex;
+  align-items: center;
+}
+
+.presentation{
+  color: #091F44;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 3rem 0 0;
+}
+
+.presentation span{
+  text-transform: capitalize;
+}
+
+.logout{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #091F44;
+  transition: all ease-in-out 200ms;
+}
+
+.logout p{
+  margin: .4rem 0 0;
+  font-size: .8rem;
+}
+
+.logout__button{
+    width: 2rem;
+}
+
+.logout:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+    color: #D1515A;
 }
 </style>

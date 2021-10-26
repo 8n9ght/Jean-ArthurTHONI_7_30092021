@@ -101,7 +101,22 @@ export default {
     position: absolute;
     left: 3rem;
     bottom: 3rem;
-    overflow: scroll;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.feed::-webkit-scrollbar{
+    width: 0.7rem;
+}
+
+.feed::-webkit-scrollbar-track{
+    background: #D1515A;
+    border-radius: 0 6rem 6rem 0 ;
+}
+
+.feed::-webkit-scrollbar-thumb{
+    background: #091F44;
+    box-shadow: #091F44 0 .2rem .5rem;
 }
 
 .page__title{
@@ -128,7 +143,8 @@ export default {
     text-align: left;
     font-size: 1.2rem;
     font-weight: bold;
-    color:red;
+    color:#D1515A;
+    text-transform: capitalize;
 }
 
 .publication .content, .user{
