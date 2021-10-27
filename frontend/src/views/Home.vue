@@ -251,4 +251,70 @@ form{
     cursor:not-allowed;
 }
 
+@media screen and (max-width: 768px) {
+    .container{
+    height: 95vh;
+}
+
+.page__title{
+    margin: 2rem 0;
+}
+
+.title{
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+}
+
+.sub_title{
+    margin: .5rem 0 0;
+    font-size: 1.5rem;
+}
+
+.switch__content{
+    margin: .7rem 0 0;
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+.form{
+    padding: 1.5rem .5rem;
+    width: 20rem;
+    border-radius: 1rem;
+}
+}
+
+@media screen and (max-width: 320px) {
+.container{
+    height: 95vh;
+}
+
+.page__title{
+    margin: 2rem 0;
+}
+
+.title{
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+}
+
+.sub_title{
+    margin: .5rem 0 0;
+    font-size: 1.5rem;
+}
+
+.switch__content{
+    margin: .7rem 0 0;
+    font-size: 1rem;
+    line-height: 1.5rem;
+}
+
+.form{
+    padding: 1.5rem .5rem;
+    width: 17rem;
+    border-radius: 1rem;
+}
+
+
+}
+
 </style>
