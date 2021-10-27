@@ -129,4 +129,12 @@ a:hover{
     cursor: pointer;
     color: #D1515A;
 }
+
+@media screen and (max-width: 768px){
+  
+}
+
+@media screen and (max-width: 320px){
+
+}
 </style>

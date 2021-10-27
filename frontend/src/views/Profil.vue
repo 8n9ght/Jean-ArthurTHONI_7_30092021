@@ -206,5 +206,11 @@ form{
     transform: scale(1.1);
 }
 
+@media screen and (max-width: 768px){
+  
+}
 
+@media screen and (max-width: 320px){
+
+}
 </style>

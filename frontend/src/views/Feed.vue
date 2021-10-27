@@ -237,4 +237,126 @@ export default {
     transform: scale(1.2);
 }
 
+@media screen and (max-width: 768px){
+.container{
+    height: 90vh;
+}
+
+.feed{
+    width: 100%;
+    padding: 1rem 1.5rem;
+    position: absolute;
+    top:0;
+    left: 0;
+    border-radius: 0;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.page__title{
+    margin: .5rem 0;
+}
+
+.title{
+    font-size: 1.5rem;
+    line-height: 1.2rem;
+}
+
+.publication{
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    box-shadow: rgb(20, 17, 70) 0.1rem 0.1rem 0.8rem;
+    width: 70%;
+    position: relative;
+    left: 0;
+    margin: 1rem 0 0;
+    color: white;
+}
+
+.publication .user{
+    font-size: 1.2rem;
+}
+
+.publication .content, .user{
+    text-align: left;
+    margin: .6rem 0;
+}
+
+.publication .content__date{
+    font-size: .8rem;
+    color: white;
+    text-align: right;
+}
+
+.publication:nth-child(2n){
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    box-shadow: rgb(20, 17, 70) 0.1rem 0.1rem 0.8rem;
+    width: 70%;
+    position: relative;
+    right: 2rem;
+    left: initial;
+    margin: 1rem 0 0;
+}
+
+.publication:nth-child(2n) .content__date{
+    font-size: .8rem;
+    color: #091F44;
+}
+
+.poster__input{
+    margin: .5rem 0;
+    padding: 1rem 0 0 1rem;
+    height: 1.5rem;
+    width: 80%;
+}
+
+.poster{
+    padding: .5rem;
+    border-radius: 0;
+    box-shadow: rgb(20, 17, 70) 0.1rem 0.1rem 0.8rem;
+    position: absolute;
+    bottom: 2rem;
+    right: 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+}
+
+.poster__button{
+    padding: .5rem;
+    border-radius: .5rem;
+    width: 2rem;
+    margin: 0 0 0 .5rem;
+}
+
+.delete_post_btn{
+    color: white;
+    border: none;
+    background: #D1515A;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: .5rem 0;
+    box-shadow: #D1515A 0 .1rem .3rem;
+    transition: all ease-in-out 200ms;
+    position: absolute;
+    right: -1rem;
+    top: -1.5rem;
+}
+
+.delete_post_btn:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+}
+
+@media screen and (max-width: 320px){
+
+}
+
 </style>
