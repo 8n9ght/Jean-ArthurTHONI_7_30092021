@@ -36,17 +36,12 @@ const instance = axios.create({
     baseURL: 'http://localhost:8080/posts'
 });
 
-
 export default {
     name: 'Feed',
-    /* data: function () {
-        return{
-            role: this.$store.state.user.data.role
-        }
-    }, */
     mounted: function(){
-        this.$store.dispatch('getPosts');
         const userData = JSON.parse(sessionStorage.getItem('user'));
+        axios.defaults.headers.common = {'Authorization': userData.token}
+        this.$store.dispatch('getPosts');
         const token = userData.token;
         if(token == ''){
             this.$router.push('/');
@@ -240,6 +235,7 @@ export default {
 @media screen and (max-width: 768px){
 .container{
     height: 90vh;
+    overflow: hidden;
 }
 
 .feed{

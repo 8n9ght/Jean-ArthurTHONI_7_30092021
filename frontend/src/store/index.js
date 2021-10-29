@@ -6,12 +6,15 @@ const instance = axios.create({
     baseURL: 'http://localhost:8080/user'
 });
 
+// const instanceBase = axios.create({
+//     baseURL: 'http://localhost:8080'
+// });
+
 const instancePost = axios.create({
     baseURL: 'http://localhost:8080/posts'
 });
 
-let user = JSON.parse(sessionStorage.getItem('user'));
-/* let userUpdated = user; */
+const user = JSON.parse(sessionStorage.getItem('user'));
 
 const store = createStore({
     state: {
@@ -28,7 +31,8 @@ const store = createStore({
             nom: '',
             prenom: '',
             email: '',
-        }
+        },
+        headerToken: '',
     },
     mutations: {
         setStatus: function(state, status){
@@ -49,6 +53,9 @@ const store = createStore({
         },
         userData: function(state, userData){
             state.userData = userData;
+        },
+        setHeaderToken: function(state,headerToken){
+            state.setHeaderToken = headerToken;
         }
     },
     actions: {
@@ -96,7 +103,6 @@ const store = createStore({
                 instance.put('/profile_update/' + store.state.user.data.id, userData)
                 .then(function (response) {
                     commit('userData', response)
-                    
                     resolve(response);
                 })
                 .catch(function (error) {

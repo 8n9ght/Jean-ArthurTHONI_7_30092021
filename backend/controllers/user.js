@@ -39,10 +39,13 @@ exports.login = (req, res) => {
             if (!valid) {
                 return res.status(401).json({ error: 'Mot de passe incorrect !' });
             }
-            res.status(200).json({message:'Connexion réussie', data: result[0], token: jwt.sign(
-                {id: result[0].id},
+            res.status(200).json({
+                data: result[0],
+                id: result[0].id,
+                token: jwt.sign(
+                { id: result[0].id },
                 'RANDOM_TOKEN_SECRET',
-                {expiresIn: '24h'}
+                { expiresIn: '24h' }
             )})
         })
         .catch(err => res.status(500).json({message:'Connexion échouée'}, err))            

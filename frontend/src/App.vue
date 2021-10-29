@@ -23,7 +23,8 @@ import {mapState} from 'vuex';
 
 export default {
   name: 'App',
-  mounted: function(){
+  mounted: 
+  function(){
     const userData = sessionStorage.length;
       if(userData == 0){
           this.$router.push('/');
@@ -33,6 +34,7 @@ export default {
       ...mapState({
           posts: 'feedPosts',
           user: 'user',
+          token: 'headerToken',
       })  
   },
   methods: {
@@ -131,7 +133,79 @@ a:hover{
 }
 
 @media screen and (max-width: 768px){
-  
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
+
+  .logo{
+    width: 15rem;
+    position: absolute;
+    left: 1rem;
+  }
+
+  nav{
+    background: rgb(255, 255, 255);
+    height: 6rem;
+    width: 100%;
+    flex-direction: column;
+    position: relative;
+    z-index: 99;
+  }
+
+  a {
+    padding: 2.45rem;
+    background: white;
+  }
+
+  a:hover{
+    background: #D1515A;
+    color: #fff;
+  }
+
+  .user-management{
+    position: absolute;
+    right: 5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .presentation{
+    color: #091F44;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0 3rem 0 0;
+  }
+
+  .presentation span{
+    display:none;
+  }
+
+  .logout{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #091F44;
+    transition: all ease-in-out 200ms;
+  }
+
+  .logout p{
+    margin: .4rem 0 0;
+    font-size: .8rem;
+  }
+
+  .logout__button{
+      width: 2rem;
+  }
+
+  .logout:hover{
+      transform: scale(1.05);
+      cursor: pointer;
+      color: #D1515A;
+  }
 }
 
 @media screen and (max-width: 320px){

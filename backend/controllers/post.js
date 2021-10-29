@@ -15,8 +15,7 @@ exports.createPost = (req, res) => {
 }
 
 exports.displayFeed = (req, res) => {
-    /* SELECT nom, prenom, contenu, postDate FROM groupomania.post INNER JOIN groupomania.user ON post.userId = user.id ORDER BY postId DESC */
-    let sql = 'SELECT nom, prenom, contenu, role, postId, postDate FROM groupomania.post INNER JOIN groupomania.user ON post.userId = user.id ORDER BY postId DESC'
+    let sql = `SELECT id, nom, prenom, contenu, role, postId, postDate FROM ${process.env.DATABASE}.post INNER JOIN ${process.env.DATABASE}.user ON post.userId = user.id ORDER BY postId DESC`
     let query = db.query(sql, (err, result) =>{
         if(err){
             throw err
@@ -35,3 +34,54 @@ exports.deletePost = (req, res) => {
     })
 }
 
+/* exports.likeManagement = (req, res, next) => {
+    switch (req.body.like) {
+      case 0: 
+        Sauce.findOne({ _id: req.params.id }) 
+          .then((sauce) => {
+            if (sauce.usersLiked.find(user => user === req.body.userId)) {  
+              Sauce.updateOne({ _id: req.params.id }, {
+                $inc: { likes: -1 },           
+                $pull: { usersLiked: req.body.userId },     
+                _id: req.params.id
+              })
+                .then(() => { res.status(201).json({ message: 'Like pris en compte' }); })
+                .catch((error) => { res.status(400).json({ error: error }); });
+  
+            } if (sauce.usersDisliked.find(user => user === req.body.userId)) {     
+              Sauce.updateOne({ _id: req.params.id }, {
+                $inc: { dislikes: -1 },
+                $pull: { usersDisliked: req.body.userId }, 
+                _id: req.params.id
+              })
+                .then(() => { res.status(201).json({ message: 'Dislike pris en compte!' }); })
+                .catch((error) => { res.status(400).json({ error: error }); });
+            }
+          })
+          .catch((error) => { res.status(404).json({ error: error }); });
+        break;
+  
+      case 1:
+        Sauce.updateOne({ _id: req.params.id }, {
+          $inc: { likes: 1 },
+          $push: { usersLiked: req.body.userId },
+          _id: req.params.id
+        })
+          .then(() => { res.status(201).json({ message: 'Like pris en compte!' }); })
+          .catch((error) => { res.status(400).json({ error: error }); });
+        break;
+  
+      case -1:
+        Sauce.updateOne({ _id: req.params.id }, {
+          $inc: { dislikes: +1 },
+          $push: { usersDisliked: req.body.userId },
+          _id: req.params.id
+        })
+          .then(() => { res.status(201).json({ message: 'Dislike pris en compte!' }); })
+          .catch((error) => { res.status(400).json({ error: error }); });
+        break;
+  
+      default:
+        console.error('Requête incorrecte');
+    }
+  }; */

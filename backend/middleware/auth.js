@@ -2,17 +2,17 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.authorization;
     const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
-    const userId = decodedToken.userId;
+    const userId = decodedToken.id;
     if (req.body.userId && req.body.userId !== userId) {
-      throw 'ID de l\'utilisateur invalide';
+      console.log('ID de l\'utilisateur invalide');
     } else {
       next();
     }
   } catch {
     res.status(401).json({
-      error: new Error('Requête invalide')
+      message: 'Requête invalide'
     });
   }
 };
