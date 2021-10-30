@@ -13,7 +13,7 @@ exports.createPost = (req, res) => {
 }
 
 exports.displayFeed = (req, res) => {
-    let sql = `SELECT id, nom, prenom, contenu, role, postId, postDate FROM ${process.env.DATABASE}.post INNER JOIN ${process.env.DATABASE}.user ON post.userId = user.id ORDER BY postId DESC`
+    let sql = `SELECT id, nom, prenom, contenu, role, postId, postDate, likes FROM ${process.env.DATABASE}.post INNER JOIN ${process.env.DATABASE}.user ON post.userId = user.id ORDER BY postId DESC`
     let query = db.query(sql, (err, result) =>{
         if(err){
             throw err
@@ -40,6 +40,15 @@ exports.deletePost = (req, res) => {
     })
 }
 
-exports.likeManagement = (req, res, next) => {
-
-  };
+exports.like = (req, res) => {
+  const userLiked = req.body.userLiked;
+  const postId = req.body.postId;
+  db.query('INSERT INTO likes (userLiked, postId) VALUES (?, ?);', [userLiked, postId], (err, result) =>{
+    if(err){
+        res.status(500).json({message: 'Votre publication n\'a pas été publié'})
+    }
+    db.query('UPDATE post SET likes = likes + 1 WHERE postId = ?', postId, (err2, result2) => {
+      res.send(result)
+    })
+  })
+};

@@ -13,8 +13,8 @@
                     <p class="content__date">{{new Date(post.postDate).toLocaleString('fr')}}</p>
                 </div>
                 <div class="likes">
-                    <img src="../assets/to-like.png" alt="Pulication not liked yet" class="tolike">
-                    <img src="../assets/like.png" alt="Pulication liked !" class="like" v-if="count > 0">
+                    <img src="../assets/like.png" alt="Pulication liked !" class="like" @click="like(post.postId)">
+                    <p>{{post.likes}}</p>
                 </div>
                 <button v-if="user.data.role !== 'user'" class="delete_post_btn" @click="deletePost(post.postId)" >X</button>
             </div>
@@ -59,6 +59,8 @@ export default {
     },
     methods: {
         postMessage: function(){
+            const token = this.user.token;
+            console.log(token)
             this.$store.dispatch('postMessage', 
             {
                 contenu: this.contenu,
@@ -79,8 +81,25 @@ export default {
             instance.delete('/delete_post/'+ id, config)
             this.$router.go()
         },
-        addLike: function(){
+        dislike: function(){
+            console.log('disliked')
+        },
+        like: function(id){
+            let postLikes = this.posts[0].likes;
+            console.log(postLikes)
+            postLikes = postLikes + 1;
+            axios.post("http://localhost:8080/posts/like", 
+            {
+                userLiked: this.user.data.id,
+                postId: id,
+            }, this.$router.go())
+            .then(() => {
+                console.log('successs')
 
+            })
+            .catch(function(error){
+                console.log(error)
+            })
         }
     }
 }
@@ -245,22 +264,22 @@ export default {
 
 .likes{
     display: flex;
-    justify-content:center;
+    justify-content:space-between;
     align-items: center;
     position: absolute;
     height:2rem;
     top: 1.2rem;
-    right: 2rem;
-    width: 1.5rem;
+    right: 3rem;
+    width: 4.5rem;
 }
 
-.tolike, .like{
-    width:1.2rem;
-    position: absolute;
+.like{
     transition: all ease-in-out 200ms;
+    width: 1.5rem;
+    margin: 0 .5rem;
 }
 
-.tolike:hover, .like:hover{
+.like:hover{
     cursor: pointer;
     transform: scale(1.15);
 }
