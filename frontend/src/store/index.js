@@ -94,13 +94,15 @@ const store = createStore({
         getUserInfos: function(){
             axios.get('http://localhost:8080/user/profile/' + store.state.user.data.id)
                 .then(function(response){
-                    console.log(response)
                     store.commit('userData', response.data[0]);
                 })
         },
         upDate: ({commit}, userData) => {
             return new Promise((resolve, reject) =>{
                 instance.put('/profile_update/' + store.state.user.data.id, userData)
+                .then(function(){
+                    this.$router.go()
+                })
                 .then(function (response) {
                     commit('userData', response)
                     resolve(response);
@@ -114,7 +116,12 @@ const store = createStore({
         postMessage: ({commit}, posts) => {
             commit('setStatus', 'loading')
             return new Promise((resolve, reject) =>{
-                instancePost.post('/create_post', posts)
+                const config = {
+                    headers: {
+                        Authorization: user.token,
+                    }
+                }
+                instancePost.post('/create_post', posts, config)
                 .then(function (response) {
                     resolve(response);
                  })

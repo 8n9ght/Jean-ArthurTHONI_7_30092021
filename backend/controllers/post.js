@@ -1,7 +1,5 @@
 const fs = require('fs');
 const db = require('../database');
-const multer = require('multer');
-const upload = multer({dest: './images'})
 
 exports.createPost = (req, res) => {
     const contenu = req.body.contenu;
@@ -25,12 +23,20 @@ exports.displayFeed = (req, res) => {
 }
 
 exports.deletePost = (req, res) => {
-    let sql = `DELETE FROM post WHERE postId = ${req.params.postId}` 
+    let sql = `SELECT role, id FROM ${process.env.DATABASE}.user`
     let query = db.query(sql, (err, result) =>{
-        if(err){
-            throw err
-        }
-        res.status(200).json({message: 'Post supprimé'})
+      if(result[0].role !== 'admin'){
+        res.status(401).json({message: 'Vous n\'avez pas les droits pour faire ça'})
+      }
+      else{
+        let sql2 = `DELETE FROM post WHERE postId = ${req.params.postId}` 
+        let query2 = db.query(sql2, (err, result) =>{
+          if(err){
+              throw err
+          }
+          res.status(200).json({message: 'Post supprimé'})
+        })
+      }
     })
 }
 

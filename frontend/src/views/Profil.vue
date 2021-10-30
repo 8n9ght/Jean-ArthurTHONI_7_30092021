@@ -36,7 +36,16 @@
                 <button class="button--ok" @click="upDate()">Mettre à jour mes informations</button>
             </form>
  
-            <button class="delete__button" @click="deleteAccount()">Supprimer mon compte</button>
+            <button class="delete__button" @click="openModal()">Supprimer mon compte</button>
+        </div>
+        <div class="confirmDelete-bg">
+            <div class="confirmDelete">
+                <p class="confirmDelete-text">Voulez-vous vraiment supprimer votre compte ?</p>
+                <div class="confirmDelete-buttons">
+                    <button class="nodelete__button" @click="closeModal()">Non, revenir en sécurité</button>
+                    <button class="delete__button" @click="deleteAccount()">Oui, Supprimer mon compte</button>
+                </div>
+        </div>
         </div>
     </div>
 </template>
@@ -77,16 +86,32 @@ export default {
                 prenom: this.prenom,
                 email: this.email,
                 password: this.password,
-            },
-            this.$router.go())
+            })
             .catch(function(error){
                 console.log(error)
             })
         },
         deleteAccount: function(){
+            const userData = JSON.parse(sessionStorage.getItem('user'));
+            const config = {
+                    headers: {
+                        Authorization: userData.token,
+                    }
+                }
             this.$router.push('/');
-            instance.delete('/profile_delete/' + this.$store.state.user.data.id)
+            instance.delete('/profile_delete/' + this.$store.state.user.data.id, config)
         },
+        confirmDeletion: function(){
+
+        },
+        openModal: function(){
+            const modal = document.querySelector(".confirmDelete-bg");
+            modal.style.display = "block";
+        },
+        closeModal: function(){
+            const modal = document.querySelector(".confirmDelete-bg");
+            modal.style.display = "none";
+        }
     }
     
 }
@@ -99,7 +124,7 @@ export default {
 
 .container{
     background: #091F44;
-    height: 52.7rem;
+    height: 50rem;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -197,13 +222,48 @@ form{
     transition: all ease-in-out 200ms
 }
 
+.nodelete__button{
+    color: white;
+    border: none;
+    background: #091F44;
+    padding: .5rem 1.5rem;
+    border-radius: .5rem;
+    width: 10rem;
+    margin: .5rem 0;
+    transition: all ease-in-out 200ms
+}
+
 .delete__button:hover{
     background: #D1515A;
 }
 
-.button--ok:hover, .delete__button:hover{
+.nodelete__button:hover{
+    background: #61cf21;
+}
+
+.button--ok:hover, .delete__button:hover, .nodelete__button:hover{
     cursor: pointer;
     transform: scale(1.1);
+}
+
+.confirmDelete-bg{
+    background: #091F44;
+    opacity: 0.98;
+    width:100%;
+    position: absolute;
+    z-index: 998;
+    height: 50rem;
+    display: none;
+}
+
+.confirmDelete{
+    background: white;
+    padding: 4rem 1rem;
+    border-radius: 1rem;
+    width: 30%;
+    position: absolute;
+    top: 30%;
+    left: 35%;
 }
 
 @media screen and (max-width: 768px){

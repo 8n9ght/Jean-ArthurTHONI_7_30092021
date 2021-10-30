@@ -55,19 +55,24 @@ export default {
     },
     methods: {
         postMessage: function(){
-            this.$store.dispatch('postMessage', {
+            this.$store.dispatch('postMessage', 
+            {
                 contenu: this.contenu,
                 id: this.user.data.id,
-            })
-            .then(function(){
-                console.log(this)
             })
             .catch(function(error){
                 console.log(error)
             })
         },
         deletePost: function(id){
-            instance.delete('/delete_post/'+ id)
+            const userData = JSON.parse(sessionStorage.getItem('user'));
+            this.$router.go()
+            const config = {
+                    body: {
+                        id: userData.data.id,
+                    }
+                }
+            instance.delete('/delete_post/'+ id, config)
             this.$router.go()
             
         }
