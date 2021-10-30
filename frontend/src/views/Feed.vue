@@ -12,6 +12,10 @@
                     <p class="content">{{post.contenu}}</p>
                     <p class="content__date">{{new Date(post.postDate).toLocaleString('fr')}}</p>
                 </div>
+                <div class="likes">
+                    <img src="../assets/to-like.png" alt="Pulication not liked yet" class="tolike">
+                    <img src="../assets/like.png" alt="Pulication liked !" class="like" v-if="count > 0">
+                </div>
                 <button v-if="user.data.role !== 'user'" class="delete_post_btn" @click="deletePost(post.postId)" >X</button>
             </div>
 
@@ -74,7 +78,9 @@ export default {
                 }
             instance.delete('/delete_post/'+ id, config)
             this.$router.go()
-            
+        },
+        addLike: function(){
+
         }
     }
 }
@@ -235,6 +241,28 @@ export default {
 .delete_post_btn:hover{
     cursor: pointer;
     transform: scale(1.2);
+}
+
+.likes{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    position: absolute;
+    height:2rem;
+    top: 1.2rem;
+    right: 2rem;
+    width: 1.5rem;
+}
+
+.tolike, .like{
+    width:1.2rem;
+    position: absolute;
+    transition: all ease-in-out 200ms;
+}
+
+.tolike:hover, .like:hover{
+    cursor: pointer;
+    transform: scale(1.15);
 }
 
 @media screen and (max-width: 768px){
